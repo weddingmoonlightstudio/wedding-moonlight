@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Moonlight</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  text-align: center;
+  padding: 28px 10px;
+  color: #d6b36a;
+  letter-spacing: 3px;
+  font-size: 22px;
+}
+
+.hero {
+  text-align: center;
+  padding: 70px 20px;
+  background: linear-gradient(135deg,#292015,#101010);
+}
+
+.hero h1 {
+  font-size: 38px;
+  color: #e1c27c;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: #cccccc;
+  margin-bottom: 30px;
+}
+
+.upload {
+  display: inline-block;
+  padding: 16px 30px;
+  background: #d5b36a;
+  color: black;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 10px;
+  color: #bda36c;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+WEDDING MOONLIGHT
+</header>
+
+<section class="hero">
+<h1>Find Your Moments</h1>
+
+<p>Your beautiful memories, just one selfie away.</p>
+
+<label class="upload" for="selfie">
+UPLOAD YOUR SELFIE
+</label>
+
+<input type="file" id="selfie" accept="image/*">
+<img id="preview" width="250"
+style="display:none; margin:25px auto; border-radius:12px;">
+</section>
+
+<footer>
+SCAN QR • MATCH FACE • UNLOCK PHOTOS
+<br><br>
+© 2026 WEDDING MOONLIGHT
+</footer>
+
+<script>
+const selfie = document.getElementById("selfie");
+const preview = document.getElementById("preview");
+
+selfie.addEventListener("change", function() {
+    const file = this.files[0];
+
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    }
+});
+</script>
+
+<script type="module" src="/main.js"></script>
+
+</body>
+</html>

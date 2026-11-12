@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Moonlight - Reception Upload</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px 15px;
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #d6b36a;
+  letter-spacing: 2px;
+}
+
+.upload-box {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  border: 1px solid #b89552;
+  border-radius: 15px;
+  background: #1b1b1b;
+}
+
+input {
+  margin: 25px 0;
+  max-width: 100%;
+}
+
+button {
+  padding: 14px 25px;
+  background: #c6a15b;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#status {
+  margin-top: 20px;
+  overflow-wrap: anywhere;
+}
+</style>
+</head>
+
+<body>
+
+<h1>WEDDING MOONLIGHT</h1>
+<p>Reception Photo Upload</p>
+
+<div class="upload-box">
+
+  <h2>Select Reception Photos</h2>
+
+  <input
+    type="file"
+    id="photos"
+    accept="image/*"
+    multiple
+  >
+
+  <br>
+
+  <button id="uploadBtn">UPLOAD PHOTOS</button>
+
+  <p id="status">Select your photos to upload.</p>
+
+</div>
+
+<script>
+const uploadBtn = document.getElementById('uploadBtn');
+const photosInput = document.getElementById('photos');
+const statusText = document.getElementById('status');
+
+uploadBtn.addEventListener('click', async () => {
+  const files = photosInput.files;
+
+  if (!files.length) {
+    statusText.textContent = 'Please select photos first.';
+    return;
+  }
+
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append('photos', file);
+  }
+
+  uploadBtn.disabled = true;
+  statusText.textContent = 'Uploading photos...';
+
+  try {
+    const response = await fetch(
+      'http://localhost:3000/api/reception-upload',
+      {
+        method: 'POST',
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    statusText.textContent =
+      result.message + ' Total: ' + result.photos.length;
+
+  } catch (error) {
+    statusText.textContent = 'Upload Error: ' + error.message;
+  }
+
+  uploadBtn.disabled = false;
+});
+</script>
+
+</body>
+</html>
